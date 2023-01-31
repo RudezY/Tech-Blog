@@ -1,11 +1,12 @@
-const postId = document.querySelector('input[name="post-id"]').value;
 
-console.log("testing");
-console.log(postId);
 
 const commentFormHandler = async (event) => {
   event.preventDefault();
+const postId = document.querySelector('input[name="post-id"]').value;
 
+console.log("testing");
+console.log(event);
+console.log(postId);
   const commentContent = document.querySelector('textarea[name="comment-body"]').value;
   console.log(commentContent);
 
@@ -21,7 +22,7 @@ const commentFormHandler = async (event) => {
       }
     });
     if (response.ok) {
-      document.location.reload();
+      document.location.replace('/dashboard');
     } else {
       alert(response.statusText);
     }
