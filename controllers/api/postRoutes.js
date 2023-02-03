@@ -30,6 +30,7 @@ router.get("/:id", withAuth, async (req, res) => {
         },
         {
           model: Comment,
+          order: [["createdAt", "DESC"]],
           attributes: ["body"],
         },
       ],
@@ -51,7 +52,7 @@ router.put("/:id", withAuth, async (req, res) => {
   try {
     const updatedBody = await Post.update(
       {
-        body: req.body,
+        ...req.body,
       },
       {
         where: {
@@ -62,8 +63,9 @@ router.put("/:id", withAuth, async (req, res) => {
     if (!updatedBody) {
       res.status(404).json({ message: "invalid post" + req.params.id });
     }
-    restore.status(200).json(updatedBody);
+    res.status(200).json(updatedBody);
   } catch (err) {
+    console.log("update error: " + err.message);
     res.status(500).json(err);
   }
 });

@@ -10,9 +10,9 @@ router.get("/", async (req, res) => {
   // refer to homepage.handlebars write the code to display the posts
 
   try {
-    if (!req.session.userId) return res.redirect("/login");
+    // if (!req.session.userId) return res.redirect("/login");
     const postData = await Post.findAll({
-      where: { userId: req.session.userId },
+      // where: { userId: req.session.userId },
       order: [["createdAt", "DESC"]],
       include: [
         {
@@ -21,6 +21,7 @@ router.get("/", async (req, res) => {
         },
         {
           model: Comment,
+          order: [["createdAt", "DESC"]],
           include: [{ model: User, attributes: ["username"] }],
         },
       ],
@@ -43,7 +44,7 @@ router.get("/", async (req, res) => {
 router.get("/post/:id", async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id, {
-      attributes: ["title", "body"],
+      attributes: ["title", "body", "id"],
       include: [
         User,
         {
