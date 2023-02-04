@@ -10,9 +10,8 @@ router.get("/", async (req, res) => {
   // refer to homepage.handlebars write the code to display the posts
 
   try {
-    // if (!req.session.userId) return res.redirect("/login");
     const postData = await Post.findAll({
-      // where: { userId: req.session.userId },
+
       order: [["createdAt", "DESC"]],
       include: [
         {
